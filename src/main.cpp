@@ -7,11 +7,13 @@ void setup() {
     lcd.init();                      // initialize the lcd
     // Print a message to the LCD.
     lcd.backlight();
+    Serial.begin(9600);
 }
 
 void loop() {
     lcd.clear();
     lcd.setCursor(0,0); // positionne le curseur à la colonne 1 et à la ligne 2
-    lcd.print("Hello World!");
+    lcd.print("T: 25.2/28.0" "\xDF" "C");
+    Serial.println("Hello World!");
     delay(1000);
 }
