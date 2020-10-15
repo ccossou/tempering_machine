@@ -10,6 +10,10 @@ DallasTemperature temp_sensor(&oneWire);
 
 LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 1 line display
 
+char current_temp_str[5];  // 4 chars and the null after. This doesn't work with Serial.println if the null is not here
+float requested_temperature{55};
+char requested_temp_str[5];
+
 void setup() {
     lcd.init();                      // initialize the lcd
     // Print a message to the LCD.
@@ -18,17 +22,33 @@ void setup() {
     temp_sensor.begin();
 
     Serial.begin(9600);
+
+
 }
 
 void loop() {
     temp_sensor.requestTemperatures(); // Send the command to get temperatures
 
     lcd.clear();
-    lcd.setCursor(0,0); // positionne le curseur à la colonne 1 et à la ligne 2
-    float current_temperature{temp_sensor.getTempCByIndex(0)};
 
+    float current_temperature{temp_sensor.getTempCByIndex(0)};
+    dtostrf(current_temperature, 4, 1, current_temp_str);
+    dtostrf(requested_temperature, 4, 1, requested_temp_str);
+
+    lcd.setCursor(0,0); // positionne le curseur at (col, row)
     lcd.print("T: 25.2/28.0" "\xDF" "C");
-    Serial.println("Hello World!");
-    Serial.println(current_temperature);
+
+    // Print temp to serial monitor
+    Serial.print("Current temperature: ");
+    Serial.print(current_temp_str);
+    Serial.print(char(176));
+    Serial.println("C");
+
+    lcd.setCursor(3, 0);
+    lcd.print(current_temp_str);
+
+    lcd.setCursor(8, 0);
+    lcd.print(requested_temp_str);
+
     delay(1000);
 }
