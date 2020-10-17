@@ -44,8 +44,12 @@ void update_display(float current_t, float requested_t) {
     lcd.setCursor(8, 0);
     lcd.print(requested_temp_str);
 
+    unsigned long uptime = millis() / 1000;
+
     // Print temp to serial monitor
-    Serial.print("Current temperature: ");
+    Serial.print("Uptime: ");
+    Serial.print(uptime);
+    Serial.print(" s ; Current temperature: ");
     Serial.print(current_temp_str);
     Serial.print(char(176));
     Serial.println("C");
