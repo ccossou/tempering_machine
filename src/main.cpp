@@ -28,8 +28,8 @@ void setup() {
 
 /** Update temperature display, both on lcd and serial
  *
- * @param current_t Current temperature measured by the sensor
- * @param requested_t Requested temperature by the user
+ * @param[in] current_t Current temperature measured by the sensor
+ * @param[in] requested_t Requested temperature by the user
  */
 void update_display(float current_t, float requested_t) {
     dtostrf(current_t, 4, 1, current_temp_str);
